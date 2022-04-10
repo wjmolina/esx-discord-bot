@@ -8,7 +8,7 @@ client = Client()
 
 @client.event
 async def on_ready():
-    client.get_channel(962074652740554836).send("I hatched.")
+    await client.get_channel(962074652740554836).send("I hatched.")
 
 
 @client.event
