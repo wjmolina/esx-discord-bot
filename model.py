@@ -101,6 +101,10 @@ class Author(Base):
             discord_id
         )
 
+    @staticmethod
+    def read():
+        return session.query(Author).all()
+
 
 engine = create_engine("sqlite:///db.sqlite")
 

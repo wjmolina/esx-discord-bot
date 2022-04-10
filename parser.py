@@ -5,7 +5,10 @@ from model import Author, Bet, Vote
 
 async def execute(client, message):
     command, args = search(MESSAGE_REGEX, message.content).groups()
-    return await COMMANDS[command][0](client, message, args)
+    try:
+        return await COMMANDS[command][0](client, message, args)
+    except Exception as exception:
+        return exception
 
 
 async def create_bet(client, message, args):
@@ -80,6 +83,17 @@ async def read_info(client, message, args):
     return "Do you have conflicting predictions? Bet on them. I will keep score."
 
 
+async def read_standings(client, message, args):
+    authors = sorted(Author.read(), key=lambda author: -len(author.won))
+    result = ""
+    for author in authors:
+        result += f"**ID**: `{author.id}`\n"
+        result += f"**Name**: {(await client.fetch_user(author.discord_id)).name}\n"
+        result += f"**Bets Won**: `{len(author.won)}`\n"
+        result += "\n"
+    return result or "There are no authors."
+
+
 TAG = "!esxbet"
 MESSAGE_REGEX = f"{TAG} (\w+)(?: (.+))?"
 COMMANDS = {
@@ -90,4 +104,5 @@ COMMANDS = {
     "read_commands": (read_commands, ""),
     "update_winner": (update_winner, "`<bet_id>` `<author_id>`"),
     "read_info": (read_info, ""),
+    "read_standings": (read_standings, ""),
 }
