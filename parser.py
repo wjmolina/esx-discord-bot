@@ -67,6 +67,10 @@ async def update_winner(client, message, args):
     return f"The winner of bet with ID `{bet_id}` is {winner_string}."
 
 
+async def read_info(client, message, args):
+    return "Do you have conflicting predictions? Bet on them. I will keep score."
+
+
 TAG = "!esxbet"
 MESSAGE_REGEX = f"{TAG} (\w+)(?: (.+))?"
 COMMANDS = {
@@ -76,4 +80,5 @@ COMMANDS = {
     "read_votes": (read_votes, "`<bet_id>`"),
     "read_commands": (read_commands, ""),
     "update_winner": (update_winner, "`<bet_id>` `<author_id>`"),
+    "read_info": (read_info, ""),
 }
