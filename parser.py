@@ -26,10 +26,16 @@ async def read_bets(client, message, args):
     for bet in Bet.read():
         result += f"**ID**: `{bet.id}`\n"
         result += f"**Value**: `{bet.value}`\n"
-        result += f"**Author**: `{bet.author_id}` ({(await client.fetch_user(bet.author.discord_id)).name})\n"
+        result += (
+            f"**Author**: `{bet.author_id}` "
+            f"({(await client.fetch_user(bet.author.discord_id)).name})\n"
+        )
         result += f"**Votes**: {len(bet.votes)}\n"
         if bet.winner_id:
-            result += f"**Winner**: `{bet.winner.id}` ({(await client.fetch_user(bet.winner.discord_id)).name})\n"
+            result += (
+                f"**Winner**: `{bet.winner.id}` "
+                f"({(await client.fetch_user(bet.winner.discord_id)).name})\n"
+            )
         result += "\n"
     return result or "There are no bets."
 
@@ -39,7 +45,10 @@ async def read_votes(client, message, args):
     result = ""
     for vote in Bet.read(id).votes:
         result += f"**Value**: `{vote.value}`\n"
-        result += f"**Author**: `{vote.author_id}` ({(await client.fetch_user(vote.author.discord_id)).name})\n"
+        result += (
+            f"**Author**: `{vote.author_id}` "
+            f"({(await client.fetch_user(vote.author.discord_id)).name})\n"
+        )
         result += "\n"
     return result or "There are no votes."
 
