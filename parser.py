@@ -87,9 +87,8 @@ async def read_standings(client, message, args):
     authors = sorted(Author.read(), key=lambda author: -len(author.won))
     result = ""
     for author in authors:
-        result += f"**ID**: `{author.id}`\n"
-        result += f"**Name**: {(await client.fetch_user(author.discord_id)).name}\n"
-        result += f"**Bets Won**: `{len(author.won)}`\n"
+        result += f"**ID**: `{author.id} {(await client.fetch_user(author.discord_id)).name}`\n"
+        result += f"**Bets Won**: `{len(author.won)} out of `{len(author.votes)}``\n"
         result += "\n"
     return result or "There are no authors."
 
