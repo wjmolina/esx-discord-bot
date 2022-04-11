@@ -109,7 +109,7 @@ async def read_standings(client, message, args):
 
 
 TAG = "!owl"
-MESSAGE_REGEX = f"{TAG} (\w+)(?: (.+))?"
+MESSAGE_REGEX = f"{TAG} (\S+)(?: (.+))?"
 COMMANDS = {
     "create-bet": (create_bet, "`<value>`"),
     "create-vote": (create_vote, "`<bet_id>` `<value>`"),
