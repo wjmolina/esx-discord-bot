@@ -24,9 +24,9 @@ async def create_vote(client, message, args):
     return f"You successfully created a vote with value `{value}`."
 
 
-async def read_bets_helper(client, *, is_open):
+async def read_bets_helper(client, *, exclude_open=False, exclude_closed=True):
     result = ""
-    for bet in Bet.read(is_open=is_open):
+    for bet in Bet.read(exclude_open=exclude_open, exclude_closed=exclude_closed):
         result += f"**ID**: `{bet.id}`\n"
         result += f"**Value**: `{bet.value}`\n"
         result += (
@@ -43,6 +43,10 @@ async def read_bets_helper(client, *, is_open):
     return result or "There are no bets."
 
 
+async def read_bets(client, message, args):
+    return await read_bets_helper(client, is_open=True)
+
+
 async def read_bets_open(client, message, args):
     return await read_bets_helper(client, is_open=True)
 
@@ -52,9 +56,9 @@ async def read_bets_closed(client, message, args):
 
 
 async def read_votes(client, message, args):
-    id = int(args)
+    bet_id = int(args)
     result = ""
-    for vote in Bet.read(id).votes:
+    for vote in Bet.read(bet_id=bet_id).votes:
         result += f"**Value**: `{vote.value}`\n"
         result += (
             f"**Author**: `{vote.author_id}` "
@@ -77,7 +81,7 @@ async def update_winner(client, message, args):
         int(bet_id),
         int(winner_id) if winner_id.lower() != "none" else None,
     )
-    bet = Bet.read(bet_id)
+    bet = Bet.read(bet_id=bet_id)
     bet.update_winner(winner_id)
     winner_string = (
         f"author with ID `{winner_id}` ({(await client.fetch_user(bet.winner.discord_id)).name})"
@@ -104,16 +108,17 @@ async def read_standings(client, message, args):
     return result or "There are no authors."
 
 
-TAG = "!esxbet"
+TAG = "!owl"
 MESSAGE_REGEX = f"{TAG} (\w+)(?: (.+))?"
 COMMANDS = {
-    "create_bet": (create_bet, "`<value>`"),
-    "create_vote": (create_vote, "`<bet_id>` `<value>`"),
-    "read_bets_open": (read_bets_open, ""),
-    "read_bets_closed": (read_bets_closed, ""),
-    "read_votes": (read_votes, "`<bet_id>`"),
-    "read_commands": (read_commands, ""),
-    "read_info": (read_info, ""),
-    "read_standings": (read_standings, ""),
-    "update_winner": (update_winner, "`<bet_id>` `<author_id>`"),
+    "create-bet": (create_bet, "`<value>`"),
+    "create-vote": (create_vote, "`<bet_id>` `<value>`"),
+    "read-bets": (read_bets, ""),
+    "read-bets-open": (read_bets_open, ""),
+    "read-bets-closed": (read_bets_closed, ""),
+    "read-votes": (read_votes, "`<bet_id>`"),
+    "read-commands": (read_commands, ""),
+    "read-info": (read_info, ""),
+    "read-standings": (read_standings, ""),
+    "update-winner": (update_winner, "`<bet_id>` `<author_id>`"),
 }

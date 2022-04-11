@@ -57,13 +57,15 @@ class Bet(Base):
         return bet
 
     @staticmethod
-    def read(bet_id=None, is_open=True):
+    def read(*, bet_id=None, exclude_open=False, exclude_closed=True):
         query = session.query(Bet)
         if bet_id is not None:
             return query.filter_by(id=bet_id).first()
-        if is_open:
-            return query.filter_by(winner_id=None).all()
-        return query.filter(Bet.winner_id != None).all()
+        if exclude_open:
+            query = query.filter(Bet.winner_id != None)
+        if exclude_closed:
+            query = query.filter(Bet.winner_id == None)
+        return query.all()
 
     def update_winner(self, winner_id):
         if winner_id and all(vote.author.id != winner_id for vote in self.votes):
