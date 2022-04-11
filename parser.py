@@ -26,7 +26,7 @@ async def create_vote(client, message, args):
 
 async def read_bets_helper(client, *, is_open):
     result = ""
-    for bet in Bet.read(is_open):
+    for bet in Bet.read(is_open=is_open):
         result += f"**ID**: `{bet.id}`\n"
         result += f"**Value**: `{bet.value}`\n"
         result += (
