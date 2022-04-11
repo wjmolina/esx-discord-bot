@@ -44,15 +44,15 @@ async def read_bets_helper(client, *, exclude_open=False, exclude_closed=True):
 
 
 async def read_bets(client, message, args):
-    return await read_bets_helper(client, is_open=True)
+    return await read_bets_helper(client, exclude_closed=False)
 
 
 async def read_bets_open(client, message, args):
-    return await read_bets_helper(client, is_open=True)
+    return await read_bets_helper(client)
 
 
 async def read_bets_closed(client, message, args):
-    return await read_bets_helper(client, is_open=False)
+    return await read_bets_helper(client, exclude_open=True, exclude_closed=False)
 
 
 async def read_votes(client, message, args):
