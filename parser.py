@@ -24,9 +24,9 @@ async def create_vote(client, message, args):
     return f"You successfully created a vote with value `{value}`."
 
 
-async def read_bets(client, message, args):
+async def read_bets_helper(client, *, is_open):
     result = ""
-    for bet in Bet.read():
+    for bet in Bet.read(is_open):
         result += f"**ID**: `{bet.id}`\n"
         result += f"**Value**: `{bet.value}`\n"
         result += (
@@ -41,6 +41,14 @@ async def read_bets(client, message, args):
             )
         result += "\n"
     return result or "There are no bets."
+
+
+async def read_bets_open(client, message, args):
+    return await read_bets_helper(client, is_open=True)
+
+
+async def read_bets_closed(client, message, args):
+    return await read_bets_helper(client, is_open=False)
 
 
 async def read_votes(client, message, args):
@@ -101,7 +109,8 @@ MESSAGE_REGEX = f"{TAG} (\w+)(?: (.+))?"
 COMMANDS = {
     "create_bet": (create_bet, "`<value>`"),
     "create_vote": (create_vote, "`<bet_id>` `<value>`"),
-    "read_bets": (read_bets, ""),
+    "read_bets_open": (read_bets_open, ""),
+    "read_bets_closed": (read_bets_closed, ""),
     "read_votes": (read_votes, "`<bet_id>`"),
     "read_commands": (read_commands, ""),
     "read_info": (read_info, ""),
