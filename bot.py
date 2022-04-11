@@ -15,8 +15,8 @@ async def on_ready():
 async def on_message(message):
     if message.content.startswith(TAG):
         await message.channel.send(await execute(client, message))
-    elif message.content == "Am I right?":
-        await message.channel.send("Yes you are.")
+    elif message.content == "Ain't that right?":
+        await message.channel.send("Yes it is.")
 
 
 client.run(os.getenv("DISCORD_TOKEN"))
