@@ -100,11 +100,11 @@ TAG = "!esxbet"
 MESSAGE_REGEX = f"{TAG} (\w+)(?: (.+))?"
 COMMANDS = {
     "create_bet": (create_bet, "`<value>`"),
-    "read_bets": (read_bets, ""),
     "create_vote": (create_vote, "`<bet_id>` `<value>`"),
+    "read_bets": (read_bets, ""),
     "read_votes": (read_votes, "`<bet_id>`"),
     "read_commands": (read_commands, ""),
-    "update_winner": (update_winner, "`<bet_id>` `<author_id>`"),
     "read_info": (read_info, ""),
     "read_standings": (read_standings, ""),
+    "update_winner": (update_winner, "`<bet_id>` `<author_id>`"),
 }
