@@ -102,8 +102,8 @@ async def read_standings(client, message, args):
         result += f"**ID**: `{author.id}` ({(await client.fetch_user(author.discord_id)).name})\n"
         n_bets = len([vote for vote in author.votes if vote.bet.winner])
         result += (
-            f"**Bets Won**: `{len(author.won)}` out of "
-            f"`{n_bets}` ({(len(author.won) / n_bets * 100):.2f}%)\n"
+            f"**Bets Won**: {len(author.won)} out of "
+            f"{n_bets} ({(len(author.won) / n_bets * 100):.2f}%)\n"
         )
         result += "\n"
     return result or "There are no authors."
