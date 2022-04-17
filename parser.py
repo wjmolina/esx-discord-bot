@@ -112,7 +112,7 @@ async def read_standings(client, message, args):
 
 
 async def translate(client, message, args):
-    return translate_v2.Client().translate(message.content, target_language="en")["translatedText"]
+    return translate_v2.Client().translate(args, target_language="en")["translatedText"]
 
 
 TAG = "!owl"
