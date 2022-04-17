@@ -1,6 +1,6 @@
 from re import search
 
-from google.cloud import translate_v2 as translate
+from google.cloud import translate_v2
 
 from model import Author, Bet, Vote
 
@@ -112,7 +112,7 @@ async def read_standings(client, message, args):
 
 
 async def translate(client, message, args):
-    return translate.Client().translate(message.content, target_language="en")["translatedText"]
+    return translate_v2.Client().translate(message.content, target_language="en")["translatedText"]
 
 
 TAG = "!owl"
