@@ -1,7 +1,5 @@
 from re import search
 
-from google.cloud import translate_v2
-
 from model import Author, Bet, Vote
 
 
@@ -111,8 +109,11 @@ async def read_standings(client, message, args):
     return result or "There are no authors."
 
 
-async def translate(client, message, args):
-    return translate_v2.Client().translate(args, target_language="en")["translatedText"]
+# async def translate(client, message, args):
+#     from google.cloud import translate_v2
+
+#     {"translate": (translate, "`<text>`")}
+#     return translate_v2.Client().translate(args, target_language="en")["translatedText"]
 
 
 TAG = "!owl"
@@ -128,5 +129,4 @@ COMMANDS = {
     "read-info": (read_info, ""),
     "read-standings": (read_standings, ""),
     "update-winner": (update_winner, "`<bet_id>` `<author_id>`"),
-    "translate": (translate, "`<text>`"),
 }
