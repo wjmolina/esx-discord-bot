@@ -119,12 +119,17 @@ async def read_standings(client, message, args):
 
 
 async def otherworld(client, message, args):
-    args = args.replace(" ", "_")
-    text = requests.get(f"https://otherworld-legends.fandom.com/wiki/{args}").text.replace(
+    text = requests.get(
+        f"https://otherworld-legends.fandom.com/wiki/Special:Search?query={args}"
+    ).text
+    results = findall('data-title="(.*?)"', text)
+    if not results:
+        return "I could not find that item."
+    result = results[0].replace(" ", "_")
+    text = requests.get(f"https://otherworld-legends.fandom.com/wiki/{result}").text.replace(
         "&#039;", "'"
     )
-    ans = "\n".join(findall(r'<meta property="og:description" content="(.*?)"', text))
-    return ans or "I could not find that item."
+    return "\n".join(findall(r'<meta property="og:description" content="(.*?)"', text))
 
 
 TAG = "!owl"
