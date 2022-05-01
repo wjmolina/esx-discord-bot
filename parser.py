@@ -1,4 +1,4 @@
-from re import search
+from re import findall, search
 
 import requests
 
@@ -121,7 +121,7 @@ async def read_standings(client, message, args):
 async def otherworld(client, message, args):
     args = "_".join(word.title() for word in args.split(" "))
     text = requests.get(f"https://otherworld-legends.fandom.com/wiki/{args}").text
-    ans = "\n".join(re.findall(r'<meta property="og:description" content="(.*?)"', text))
+    ans = "\n".join(findall(r'<meta property="og:description" content="(.*?)"', text))
     return ans or "I could not find that item."
 
 
