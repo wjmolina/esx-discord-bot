@@ -1,5 +1,7 @@
 from re import search
 
+import requests
+
 from model import Author, Bet, Vote
 
 
@@ -116,6 +118,13 @@ async def read_standings(client, message, args):
 #     return translate_v2.Client().translate(args, target_language="en")["translatedText"]
 
 
+async def otherworld(client, message, args):
+    args = "_".join(word.title() for word in args.split(" "))
+    text = requests.get(f"https://otherworld-legends.fandom.com/wiki/{args}").text
+    ans = "\n".join(re.findall(r'<meta property="og:description" content="(.*?)"', text))
+    return ans or "I could not find that item."
+
+
 TAG = "!owl"
 MESSAGE_REGEX = f"{TAG} (\S+)(?: (.+))?"
 COMMANDS = {
@@ -129,4 +138,5 @@ COMMANDS = {
     "read-info": (read_info, ""),
     "read-standings": (read_standings, ""),
     "update-winner": (update_winner, "`<bet_id>` `<author_id>`"),
+    "otherworld": (otherworld, "`<item_name>`"),
 }
