@@ -119,7 +119,7 @@ async def read_standings(client, message, args):
 
 
 async def otherworld(client, message, args):
-    args = "_".join(word if word in {"of"} else word.title() for word in args.split(" "))
+    args = args.replace(" ", "_")
     text = requests.get(f"https://otherworld-legends.fandom.com/wiki/{args}").text.replace(
         "&#039;", "'"
     )
