@@ -126,10 +126,11 @@ async def otherworld(client, message, args):
     if not results:
         return "I could not find that item."
     result = results[0].replace(" ", "_")
-    text = requests.get(f"https://otherworld-legends.fandom.com/wiki/{result}").text.replace(
+    url = f"https://otherworld-legends.fandom.com/wiki/{result}"
+    text = requests.get(url).text.replace(
         "&#039;", "'"
     )
-    return "\n".join(findall(r'<meta property="og:description" content="(.*?)"', text))
+    return "\n".join(findall(r'<meta property="og:description" content="(.*?)"', text)) + "... " + url
 
 
 TAG = "!owl"
